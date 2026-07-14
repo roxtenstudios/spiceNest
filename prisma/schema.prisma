@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  description String
+  price       Float
+  image       String
+  category    String   @default("Signature")
+  createdAt   DateTime @default(now())
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  customerName    String
+  customerEmail   String
+  customerAddress String
+  total           Float
+  status          String   @default("PENDING")
+  createdAt       DateTime @default(now())
+  items           String   // JSON string of cart items for simplicity in SQLite demo
+}
+
+model BusinessInquiry {
+  id        String   @id @default(cuid())
+  name      String
+  company   String
+  email     String
+  type      String
+  message   String
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+}
